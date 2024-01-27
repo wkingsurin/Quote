@@ -2,38 +2,9 @@ import classes from "./Main.module.css";
 import { useState } from "react";
 
 import Quote from "./Quote";
-import getRandomQuote from "../getRandomQuote";
 
-const initialQoute = {
-  text: "Cooking is one failure after another, and that’s how you finally learn.",
-  author: "Julia Child",
-};
-
-const URL = "https://type.fit/api/quotes";
-
-const getQuote = async (url) => {
-  let response = await fetch(url);
-  let quotes = await response.json();
-
-  if (!localStorage.getItem("quotes")) {
-    response = await fetch(url);
-    quotes = await response.json();
-
-    localStorage.setItem("quotes", JSON.stringify(quotes));
-  } else {
-    quotes = JSON.parse(localStorage.getItem("quotes"));
-  }
-
-  const quote = getRandomQuote(quotes);
-
-  return quote;
-};
-
-const correctAuthorName = (author) => {
-  const regExp = /,?\s?type\.fit/;
-
-  return author.replace(regExp, "");
-};
+import { initialQoute, URL, getQuote } from "../getQuote";
+import { correctAuthorName } from "../correctAuthorName";
 
 export default function Main() {
   const [quote, setQuote] = useState(initialQoute);

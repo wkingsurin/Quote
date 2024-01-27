@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
+
+#root {
+}
+.wrapper {
+  min-height: 100vh;
+
+  background: no-repeat 100%/100% url("./island.jpg");
+  background-size: cover;
+}

@@ -3,8 +3,8 @@ import { useState } from "react";
 
 import Quote from "./Quote";
 
-import { initialQoute, URL, getQuote } from "../getQuote";
-import { correctAuthorName } from "../correctAuthorName";
+import { initialQoute, URL, getQuote } from "../modules/getQuote";
+import { correctAuthorName } from "../modules/correctAuthorName";
 
 export default function Main() {
   const [quote, setQuote] = useState(initialQoute);

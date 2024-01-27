@@ -4,11 +4,16 @@ import { useState } from "react";
 import Quote from "./Quote";
 import getRandomQuote from "../getRandomQuote";
 
+const initialQoute = {
+  text: "Cooking is one failure after another, and that’s how you finally learn.",
+  author: "Julia Child",
+};
+
 const URL = "https://type.fit/api/quotes";
 
 const getQuote = async (url) => {
-  let response;
-  let quotes;
+  let response = await fetch(url);
+  let quotes = await response.json();
 
   if (!localStorage.getItem("quotes")) {
     response = await fetch(url);
@@ -17,18 +22,17 @@ const getQuote = async (url) => {
     localStorage.setItem("quotes", JSON.stringify(quotes));
   } else {
     quotes = JSON.parse(localStorage.getItem("quotes"));
-    // console.log(quotes);
   }
 
   const quote = getRandomQuote(quotes);
-  //   console.log(quote);
-  // correct author
 
   return quote;
 };
-const initialQoute = {
-  text: "Cooking is one failure after another, and that’s how you finally learn.",
-  author: "Julia Child",
+
+const correctAuthorName = (author) => {
+  const regExp = /,?\s?type\.fit/;
+
+  return author.replace(regExp, "");
 };
 
 export default function Main() {
@@ -37,11 +41,12 @@ export default function Main() {
   const onClickGenerate = () => {
     getQuote(URL).then((quote) => {
       setQuote(() => {
-        return { text: quote.text, author: quote.author };
+        return {
+          text: quote.text,
+          author: correctAuthorName(quote.author) || "Unknown",
+        };
       });
     });
-
-    // console.log(quote);
   };
 
   return (

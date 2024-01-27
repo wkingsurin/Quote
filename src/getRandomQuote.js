@@ -1,25 +1,23 @@
 import getRandomNumber from "./getRandomNumber";
 
-const showedQuotes = [];
+const getIndexOfQoute = (quotes, quote) => {
+  return quotes.indexOf(quote);
+};
+
+const indexOfShowedQuotes = [];
 
 export default function getRandomQuote(quotes) {
-  if (showedQuotes.length == quotes.length) {
-    showedQuotes.length = 0;
-    getRandomQuote(quotes);
+  if (indexOfShowedQuotes.length == quotes.length) {
+    indexOfShowedQuotes.length = 0;
   }
 
-  let quote = quotes[getRandomNumber(0, quotes.length - 1)];
+  let randomQuote = quotes[getRandomNumber(0, quotes.length - 1)];
 
-  showedQuotes.forEach((showedQuote) => {
-    while (showedQuote.text == quote.text) {
-      console.log(`showedQuote.text == quote.text`, true);
-      quote = quotes[getRandomNumber(0, quotes.length - 1)];
-    }
-  });
+  while (indexOfShowedQuotes.includes(getIndexOfQoute(quotes, randomQuote))) {
+    randomQuote = quotes[getRandomNumber(0, quotes.length - 1)];
+  }
 
-  showedQuotes.push(quote);
+  indexOfShowedQuotes.push(getIndexOfQoute(quotes, randomQuote));
 
-  console.log(showedQuotes);
-
-  return quote;
+  return randomQuote;
 }
